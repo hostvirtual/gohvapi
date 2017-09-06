@@ -98,7 +98,7 @@ your API Key as it's sole argument and returns the Client struct ready to talk t
 
 
 
-### <a name="Client.CancelServer">func</a> (\*Client) [CancelServer](/src/target/servers.go?s=4078:4121#L144)
+### <a name="Client.CancelServer">func</a> (\*Client) [CancelServer](/src/target/servers.go?s=4228:4271#L146)
 ``` go
 func (c *Client) CancelServer(id int) error
 ```
@@ -116,7 +116,7 @@ func (c *Client) CreateSSHKey(name, key string) (sshkey SSHKey, err error)
 
 
 
-### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=3127:3248#L116)
+### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=3277:3398#L118)
 ``` go
 func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error)
 ```
@@ -132,11 +132,12 @@ func (c *Client) DeleteSSHKey(id int) error
 
 
 
-### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=2891:2934#L106)
+### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=3041:3084#L108)
 ``` go
 func (c *Client) DeleteServer(id int) error
 ```
 DeleteServer external method on Client to destroy an instance
+This should not be used in Terraform as we will use CancelServer instead
 
 
 
@@ -219,11 +220,12 @@ GetServers external method on Client to list your instances
 
 
 
-### <a name="Client.ProvisionServer">func</a> (\*Client) [ProvisionServer](/src/target/servers.go?s=2094:2204#L77)
+### <a name="Client.ProvisionServer">func</a> (\*Client) [ProvisionServer](/src/target/servers.go?s=2169:2279#L78)
 ``` go
 func (c *Client) ProvisionServer(name string, id, locationID, osID int, options *ServerOptions) (JobID, error)
 ```
 ProvisionServer external method on Client to re-build an instance
+This should not be used in Terraform as we will use CreateServer instead
 
 
 
