@@ -18,6 +18,7 @@ Rest API at <a href="https://bapi.vr.org/">https://bapi.vr.org/</a>
 * [func GetKeyFromEnv() string](#GetKeyFromEnv)
 * [type Client](#Client)
   * [func NewClient(apikey string) *Client](#NewClient)
+  * [func (c *Client) CancelServer(id int) error](#Client.CancelServer)
   * [func (c *Client) CreateSSHKey(name, key string) (sshkey SSHKey, err error)](#Client.CreateSSHKey)
   * [func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error)](#Client.CreateServer)
   * [func (c *Client) DeleteSSHKey(id int) error](#Client.DeleteSSHKey)
@@ -97,6 +98,17 @@ your API Key as it's sole argument and returns the Client struct ready to talk t
 
 
 
+### <a name="Client.CancelServer">func</a> (\*Client) [CancelServer](/src/target/servers.go?s=4078:4121#L144)
+``` go
+func (c *Client) CancelServer(id int) error
+```
+CancelServer external method on Client to cancel/remove from billing an instance
+this method completely removes an instance, it cannot be rebuilt afterward
+billing should be prorated to the day or something like that
+
+
+
+
 ### <a name="Client.CreateSSHKey">func</a> (\*Client) [CreateSSHKey](/src/target/sshkeys.go?s=621:695#L21)
 ``` go
 func (c *Client) CreateSSHKey(name, key string) (sshkey SSHKey, err error)
@@ -104,10 +116,12 @@ func (c *Client) CreateSSHKey(name, key string) (sshkey SSHKey, err error)
 
 
 
-### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=1698:1819#L77)
+### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=3127:3248#L116)
 ``` go
 func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error)
 ```
+CreateServer external method on Client to buy and build a new instance
+
 
 
 
@@ -118,10 +132,12 @@ func (c *Client) DeleteSSHKey(id int) error
 
 
 
-### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=1535:1578#L68)
+### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=2891:2934#L106)
 ``` go
 func (c *Client) DeleteServer(id int) error
 ```
+DeleteServer external method on Client to destroy an instance
+
 
 
 
@@ -185,45 +201,57 @@ func (c *Client) GetSSHKeys() (keys []SSHKey, err error)
 
 
 
-### <a name="Client.GetServer">func</a> (\*Client) [GetServer](/src/target/servers.go?s=860:921#L34)
+### <a name="Client.GetServer">func</a> (\*Client) [GetServer](/src/target/servers.go?s=1161:1222#L39)
 ``` go
 func (c *Client) GetServer(id int) (server Server, err error)
 ```
+GetServer external method on Client to get an instance
 
 
 
-### <a name="Client.GetServers">func</a> (\*Client) [GetServers](/src/target/servers.go?s=673:720#L23)
+
+### <a name="Client.GetServers">func</a> (\*Client) [GetServers](/src/target/servers.go?s=917:964#L27)
 ``` go
 func (c *Client) GetServers() ([]Server, error)
 ```
+GetServers external method on Client to list your instances
 
 
 
-### <a name="Client.ProvisionServer">func</a> (\*Client) [ProvisionServer](/src/target/servers.go?s=2426:2536#L102)
+
+### <a name="Client.ProvisionServer">func</a> (\*Client) [ProvisionServer](/src/target/servers.go?s=2094:2204#L77)
 ``` go
 func (c *Client) ProvisionServer(name string, id, locationID, osID int, options *ServerOptions) (JobID, error)
 ```
+ProvisionServer external method on Client to re-build an instance
 
 
 
-### <a name="Client.RebootServer">func</a> (\*Client) [RebootServer](/src/target/servers.go?s=1372:1415#L59)
+
+### <a name="Client.RebootServer">func</a> (\*Client) [RebootServer](/src/target/servers.go?s=1863:1906#L67)
 ``` go
 func (c *Client) RebootServer(id int) error
 ```
+RebootServer external method on Client to reboot an instance
 
 
 
-### <a name="Client.StartServer">func</a> (\*Client) [StartServer](/src/target/servers.go?s=1048:1090#L41)
+
+### <a name="Client.StartServer">func</a> (\*Client) [StartServer](/src/target/servers.go?s=1412:1454#L47)
 ``` go
 func (c *Client) StartServer(id int) error
 ```
+StartServer external method on Client to boot up an instance
 
 
 
-### <a name="Client.StopServer">func</a> (\*Client) [StopServer](/src/target/servers.go?s=1209:1250#L50)
+
+### <a name="Client.StopServer">func</a> (\*Client) [StopServer](/src/target/servers.go?s=1637:1678#L57)
 ``` go
 func (c *Client) StopServer(id int) error
 ```
+StopServer external method on Client to shut down an instance
+
 
 
 
@@ -234,12 +262,14 @@ func (c *Client) UpdateSSHKey(id int, name, key string) (SSHKey, error)
 
 
 
-## <a name="JobID">type</a> [JobID](/src/target/servers.go?s=623:671#L19)
+## <a name="JobID">type</a> [JobID](/src/target/servers.go?s=805:853#L22)
 ``` go
 type JobID struct {
     ID int `json:"id,string"`
 }
 ```
+JobID struct holds the current Job Id for what's being processed
+
 
 
 
@@ -352,7 +382,7 @@ type SSHKey struct {
 
 
 
-## <a name="Server">type</a> [Server](/src/target/servers.go?s=76:533#L1)
+## <a name="Server">type</a> [Server](/src/target/servers.go?s=122:579#L1)
 ``` go
 type Server struct {
     Name         string `json:"fqdn"`
@@ -368,6 +398,7 @@ type Server struct {
     PowerStatus  string `json:"state"`
 }
 ```
+Server struct defines what a VPS looks like
 
 
 
@@ -377,7 +408,8 @@ type Server struct {
 
 
 
-## <a name="ServerOptions">type</a> [ServerOptions](/src/target/servers.go?s=535:621#L13)
+
+## <a name="ServerOptions">type</a> [ServerOptions](/src/target/servers.go?s=650:736#L15)
 ``` go
 type ServerOptions struct {
     SSHKeyID    int
@@ -385,6 +417,8 @@ type ServerOptions struct {
     CloudConfig string
 }
 ```
+ServerOptions struct defines some extra options including SSH Auth
+
 
 
 
