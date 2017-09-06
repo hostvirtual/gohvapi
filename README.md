@@ -1,7 +1,7 @@
 
 
 # gohvapi
-`import "."`
+`import "github.com/hostvirtual/gohvapi"`
 
 * [Overview](#pkg-overview)
 * [Index](#pkg-index)
@@ -47,7 +47,7 @@ Rest API at <a href="https://bapi.vr.org/">https://bapi.vr.org/</a>
 
 
 #### <a name="pkg-files">Package files</a>
-[client.go](/src/target/client.go) [locations.go](/src/target/locations.go) [os.go](/src/target/os.go) [packages.go](/src/target/packages.go) [plans.go](/src/target/plans.go) [servers.go](/src/target/servers.go) [sshkeys.go](/src/target/sshkeys.go) 
+[client.go](/src/github.com/hostvirtual/gohvapi/client.go) [locations.go](/src/github.com/hostvirtual/gohvapi/locations.go) [os.go](/src/github.com/hostvirtual/gohvapi/os.go) [packages.go](/src/github.com/hostvirtual/gohvapi/packages.go) [plans.go](/src/github.com/hostvirtual/gohvapi/plans.go) [servers.go](/src/github.com/hostvirtual/gohvapi/servers.go) [sshkeys.go](/src/github.com/hostvirtual/gohvapi/sshkeys.go) 
 
 
 ## <a name="pkg-constants">Constants</a>
