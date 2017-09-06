@@ -1,11 +1,12 @@
-//gohvapi package file for location handling
 package gohvapi
 
+//Location is a struct for storing the id and name of a location
 type Location struct {
 	ID   int    `json:"id,string"`
 	Name string `json:"name"`
 }
 
+//GetLocations public method on Client to get a list of locations
 func (c *Client) GetLocations() ([]Location, error) {
 
 	var locationMap map[string]Location

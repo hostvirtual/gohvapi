@@ -10,6 +10,8 @@
 Package gohvapi provides a simple golang interface to the HostVirtual
 Rest API at <a href="https://bapi.vr.org/">https://bapi.vr.org/</a>
 
+gohvapi package file for location handling
+
 
 
 
@@ -125,7 +127,7 @@ func (c *Client) DeleteServer(id int) error
 
 
 
-### <a name="Client.GetLocations">func</a> (\*Client) [GetLocations](/src/target/locations.go?s=102:153#L1)
+### <a name="Client.GetLocations">func</a> (\*Client) [GetLocations](/src/target/locations.go?s=147:198#L1)
 ``` go
 func (c *Client) GetLocations() ([]Location, error)
 ```
@@ -238,7 +240,7 @@ type JobID struct {
 
 
 
-## <a name="Location">type</a> [Location](/src/target/locations.go?s=17:100#L1)
+## <a name="Location">type</a> [Location](/src/target/locations.go?s=62:145#L1)
 ``` go
 type Location struct {
     ID   int    `json:"id,string"`
