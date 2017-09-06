@@ -134,10 +134,12 @@ GetLocations public method on Client to get a list of locations
 
 
 
-### <a name="Client.GetOSs">func</a> (\*Client) [GetOSs](/src/target/os.go?s=253:292#L3)
+### <a name="Client.GetOSs">func</a> (\*Client) [GetOSs](/src/target/os.go?s=358:397#L5)
 ``` go
 func (c *Client) GetOSs() ([]OS, error)
 ```
+GetOSs returns a list of OS objects from the api
+
 
 
 
@@ -258,7 +260,7 @@ Location is a struct for storing the id and name of a location
 
 
 
-## <a name="OS">type</a> [OS](/src/target/os.go?s=17:251#L1)
+## <a name="OS">type</a> [OS](/src/target/os.go?s=71:305#L1)
 ``` go
 type OS struct {
     ID      int    `json:"id,string"`
@@ -270,6 +272,8 @@ type OS struct {
     Tech    string `json:"tech"`
 }
 ```
+OS is a struct for storing the attributes of and OS
+
 
 
 
