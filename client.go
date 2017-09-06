@@ -39,7 +39,7 @@ func GetKeyFromEnv() string {
 }
 
 //NewClient is the main entrypoint for instantiating a Client struct. It takes
-//your API Key as it's sole argument
+//your API Key as it's sole argument and returns the Client struct ready to talk to the API
 func NewClient(apikey string) *Client {
 	useragent := "gohvapi/" + Version
 	transport := &http.Transport{
