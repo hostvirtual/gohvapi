@@ -57,6 +57,7 @@ func NewClient(apikey string) *Client {
 	}
 }
 
+//apiPath is just a short method for forcing the prepending of / to the url
 func apiPath(path string) string {
 	if strings.HasPrefix(path, "/") {
 		return fmt.Sprintf("%s", path)
