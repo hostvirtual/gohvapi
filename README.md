@@ -143,17 +143,22 @@ GetOSs returns a list of OS objects from the api
 
 
 
-### <a name="Client.GetPackage">func</a> (\*Client) [GetPackage](/src/target/packages.go?s=448:508#L14)
+### <a name="Client.GetPackage">func</a> (\*Client) [GetPackage](/src/target/packages.go?s=654:714#L18)
 ``` go
 func (c *Client) GetPackage(id int) (pkg Package, err error)
 ```
+GetPackage takes an id (int) as it's sole argument and returns a single
+Package object
 
 
 
-### <a name="Client.GetPackages">func</a> (\*Client) [GetPackages](/src/target/packages.go?s=254:303#L3)
+
+### <a name="Client.GetPackages">func</a> (\*Client) [GetPackages](/src/target/packages.go?s=369:418#L5)
 ``` go
 func (c *Client) GetPackages() ([]Package, error)
 ```
+GetPackages returns a list of Package object from the API
+
 
 
 
@@ -283,7 +288,7 @@ OS is a struct for storing the attributes of and OS
 
 
 
-## <a name="Package">type</a> [Package](/src/target/packages.go?s=35:252#L1)
+## <a name="Package">type</a> [Package](/src/target/packages.go?s=90:307#L1)
 ``` go
 type Package struct {
     ID        int    `json:"mbpkgid,string"`
@@ -293,6 +298,8 @@ type Package struct {
     Installed int    `json:"installed,string"`
 }
 ```
+Package struct stores the purchacable package values
+
 
 
 
