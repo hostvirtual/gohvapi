@@ -1,3 +1,5 @@
+//Package gohvapi provides a simple golang interface to the HostVirtual
+//Rest API at https://bapi.vr.org/
 package gohvapi
 
 import (
@@ -21,6 +23,8 @@ const (
 	ContentType  = "application/json"
 )
 
+//Client is the main object (struct) to which we attach most methods/functions.
+//It has the following fields: (client, userAgent, endPoint, apiKey)
 type Client struct {
 	client    *http.Client
 	userAgent string
@@ -28,10 +32,14 @@ type Client struct {
 	apiKey    string
 }
 
+//GetKeyFromEnv is a simple function to try to yank the value for "VR_API_KEY" from
+//the environment
 func GetKeyFromEnv() string {
 	return os.Getenv("VR_API_KEY")
 }
 
+//NewClient is the main entrypoint for instantiating a Client struct. It takes
+//your API Key as it's sole argument
 func NewClient(apikey string) *Client {
 	useragent := "gohvapi/" + Version
 	transport := &http.Transport{
