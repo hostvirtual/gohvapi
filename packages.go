@@ -1,4 +1,4 @@
-package govrapi
+package gohvapi
 
 import "strconv"
 

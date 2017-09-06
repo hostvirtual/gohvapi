@@ -1,4 +1,4 @@
-package govrapi
+package gohvapi
 
 type Location struct {
 	ID   int    `json:"id,string"`

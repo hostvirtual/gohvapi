@@ -1,4 +1,4 @@
-package govrapi
+package gohvapi
 
 import (
 	"bytes"
@@ -33,7 +33,7 @@ func GetKeyFromEnv() string {
 }
 
 func NewClient(apikey string) *Client {
-	useragent := "govrapi/" + Version
+	useragent := "gohvapi/" + Version
 	transport := &http.Transport{
 		TLSNextProto: make(map[string]func(string, *tls.Conn) http.RoundTripper),
 	}

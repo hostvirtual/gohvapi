@@ -1,4 +1,4 @@
-package govrapi
+package gohvapi
 
 type OS struct {
 	ID      int    `json:"id,string"`

@@ -1,4 +1,4 @@
-package govrapi
+package gohvapi
 
 type Plan struct {
 	ID        int    `json:"plan_id,string"`
