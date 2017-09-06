@@ -74,7 +74,7 @@ func apiKeyPath(path, apiKey string) string {
 	return path + "?key=" + apiKey
 }
 
-//get method on Client struct for providing the HTTP GET call
+//get internal method on Client struct for providing the HTTP GET call
 func (c *Client) get(path string, data interface{}) error {
 	req, err := c.newRequest("GET", apiPath(path), nil)
 	if err != nil {
@@ -83,7 +83,7 @@ func (c *Client) get(path string, data interface{}) error {
 	return c.do(req, data)
 }
 
-//post method on Client struct for providing the HTTP POST call
+//post internal method on Client struct for providing the HTTP POST call
 func (c *Client) post(path string, values []byte, data interface{}) error {
 
 	fmt.Println(string(values))
@@ -97,7 +97,7 @@ func (c *Client) post(path string, values []byte, data interface{}) error {
 	return c.do(req, data)
 }
 
-//put method on Client struct for providing the HTTP PUT call
+//put internal method on Client struct for providing the HTTP PUT call
 func (c *Client) put(path string, values []byte, data interface{}) error {
 
 	fmt.Println(string(values))
@@ -110,7 +110,7 @@ func (c *Client) put(path string, values []byte, data interface{}) error {
 	return c.do(req, data)
 }
 
-//patch method on Client struct for providing the HTTP PATCH call
+//patch internal method on Client struct for providing the HTTP PATCH call
 func (c *Client) patch(path string, values url.Values, data interface{}) error {
 	req, err := c.newRequest("PATCH", apiPath(path), strings.NewReader(values.Encode()))
 	if err != nil {
@@ -119,7 +119,7 @@ func (c *Client) patch(path string, values url.Values, data interface{}) error {
 	return c.do(req, data)
 }
 
-//delete method on Client struct for providing the HTTP DELETE call
+//delete internal method on Client struct for providing the HTTP DELETE call
 func (c *Client) delete(path string, values url.Values, data interface{}) error {
 	req, err := c.newRequest("DELETE", apiPath(path), nil)
 	if err != nil {
@@ -128,7 +128,7 @@ func (c *Client) delete(path string, values url.Values, data interface{}) error 
 	return c.do(req, data)
 }
 
-//newRequest method on Client struct for wrapping the get/post/put/patch/delete methods
+//newRequest internal method on Client struct for wrapping the get/post/put/patch/delete methods
 func (c *Client) newRequest(method string, path string, body io.Reader) (*http.Request, error) {
 
 	relPath, err := url.Parse(apiKeyPath(path, c.apiKey))
@@ -153,7 +153,7 @@ func (c *Client) newRequest(method string, path string, body io.Reader) (*http.R
 
 }
 
-//do method on Client struct for making the HTTP calls
+//do internal method on Client struct for making the HTTP calls
 func (c *Client) do(req *http.Request, data interface{}) error {
 
 	var apiError error
