@@ -84,6 +84,7 @@ func (c *Client) RebootServer(id int) error {
 }
 
 //ProvisionServer external method on Client to re-build an instance
+//This should not be used in Terraform as we will use CreateServer instead
 func (c *Client) ProvisionServer(name string, id, locationID, osID int, options *ServerOptions) (JobID, error) {
 
 	var jobid JobID
@@ -113,6 +114,7 @@ func (c *Client) ProvisionServer(name string, id, locationID, osID int, options 
 }
 
 //DeleteServer external method on Client to destroy an instance
+//This should not be used in Terraform as we will use CancelServer instead
 func (c *Client) DeleteServer(id int) error {
 
 	if err := c.post("/cloud/server/delete/"+strconv.Itoa(id), nil, nil); err != nil {
