@@ -1,5 +1,6 @@
 package gohvapi
 
+//Plan struct defines the purchaceable plans/packages
 type Plan struct {
 	ID        int    `json:"plan_id,string"`
 	Name      string `json:"plan"`
@@ -10,6 +11,7 @@ type Plan struct {
 	Available string `json:"available"`
 }
 
+//GetPlans external method on Client to list available Plans
 func (c *Client) GetPlans() ([]Plan, error) {
 
 	var planList []Plan

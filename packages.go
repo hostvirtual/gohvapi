@@ -2,7 +2,7 @@ package gohvapi
 
 import "strconv"
 
-//Package struct stores the purchacable package values
+//Package struct stores the purchaced package values
 type Package struct {
 	ID        int    `json:"mbpkgid,string"`
 	Status    string `json:"package_status"`
@@ -11,7 +11,7 @@ type Package struct {
 	Installed int    `json:"installed,string"`
 }
 
-//GetPackages returns a list of Package object from the API
+//GetPackages external method on Client that returns a list of Package object from the API
 func (c *Client) GetPackages() ([]Package, error) {
 
 	var packageList []Package
@@ -23,8 +23,8 @@ func (c *Client) GetPackages() ([]Package, error) {
 	return packageList, nil
 }
 
-//GetPackage takes an id (int) as it's sole argument and returns a single
-//Package object
+//GetPackage external method on Client that takes an id (int) as it's sole
+//argument and returns a single Package object
 func (c *Client) GetPackage(id int) (pkg Package, err error) {
 	if err := c.get("/cloud/package/"+strconv.Itoa(id), &pkg); err != nil {
 		return Package{Installed: 0}, err
