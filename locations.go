@@ -1,3 +1,4 @@
+//gohvapi package file for location handling
 package gohvapi
 
 type Location struct {
