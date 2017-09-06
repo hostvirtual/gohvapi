@@ -98,13 +98,14 @@ your API Key as it's sole argument and returns the Client struct ready to talk t
 
 
 
-### <a name="Client.CancelServer">func</a> (\*Client) [CancelServer](/src/target/servers.go?s=4228:4271#L146)
+### <a name="Client.CancelServer">func</a> (\*Client) [CancelServer](/src/target/servers.go?s=4379:4422#L148)
 ``` go
 func (c *Client) CancelServer(id int) error
 ```
-CancelServer external method on Client to cancel/remove from billing an instance
-this method completely removes an instance, it cannot be rebuilt afterward
-billing should be prorated to the day or something like that
+CancelServer external method on Client to cancel/remove from billing an instance.
+this method completely removes an instance, it cannot be rebuilt afterward.
+billing should be prorated to the day or something like that.
+This method requires apikey_allow_cancel to be checked on the account.
 
 
 
@@ -116,11 +117,11 @@ func (c *Client) CreateSSHKey(name, key string) (sshkey SSHKey, err error)
 
 
 
-### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=3277:3398#L118)
+### <a name="Client.CreateServer">func</a> (\*Client) [CreateServer](/src/target/servers.go?s=3352:3473#L119)
 ``` go
 func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error)
 ```
-CreateServer external method on Client to buy and build a new instance
+CreateServer external method on Client to buy and build a new instance.
 
 
 
@@ -132,12 +133,13 @@ func (c *Client) DeleteSSHKey(id int) error
 
 
 
-### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=3041:3084#L108)
+### <a name="Client.DeleteServer">func</a> (\*Client) [DeleteServer](/src/target/servers.go?s=3115:3158#L109)
 ``` go
 func (c *Client) DeleteServer(id int) error
 ```
-DeleteServer external method on Client to destroy an instance
-This should not be used in Terraform as we will use CancelServer instead
+DeleteServer external method on Client to destroy an instance.
+This should not be used in Terraform as we will use CancelServer instead.
+This method requires apikey_allow_delete to be checked on the account
 
 
 
