@@ -113,8 +113,9 @@ func (c *Client) ProvisionServer(name string, id, locationID, osID int, options 
 	return jobid, nil
 }
 
-//DeleteServer external method on Client to destroy an instance
-//This should not be used in Terraform as we will use CancelServer instead
+//DeleteServer external method on Client to destroy an instance.
+//This should not be used in Terraform as we will use CancelServer instead.
+//This method requires apikey_allow_delete to be checked on the account
 func (c *Client) DeleteServer(id int) error {
 
 	if err := c.post("/cloud/server/delete/"+strconv.Itoa(id), nil, nil); err != nil {
@@ -124,7 +125,7 @@ func (c *Client) DeleteServer(id int) error {
 	return nil
 }
 
-//CreateServer external method on Client to buy and build a new instance
+//CreateServer external method on Client to buy and build a new instance.
 func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error) {
 
 	values := map[string]string{"plan": plan, "fqdn": name, "location": strconv.Itoa(locationID), "image": strconv.Itoa(osID)}
@@ -150,9 +151,10 @@ func (c *Client) CreateServer(name, plan string, locationID, osID int, options *
 	return server, nil
 }
 
-//CancelServer external method on Client to cancel/remove from billing an instance
-//this method completely removes an instance, it cannot be rebuilt afterward
-//billing should be prorated to the day or something like that
+//CancelServer external method on Client to cancel/remove from billing an instance.
+//this method completely removes an instance, it cannot be rebuilt afterward.
+//billing should be prorated to the day or something like that.
+//This method requires apikey_allow_cancel to be checked on the account.
 func (c *Client) CancelServer(id int) error {
 
 	if err := c.post("/cloud/cancel/"+strconv.Itoa(id), nil, nil); err != nil {
