@@ -86,12 +86,12 @@ It has the following fields: (client, userAgent, endPoint, apiKey)
 
 
 
-### <a name="NewClient">func</a> [NewClient](/src/target/client.go?s=908:945#L33)
+### <a name="NewClient">func</a> [NewClient](/src/target/client.go?s=963:1000#L33)
 ``` go
 func NewClient(apikey string) *Client
 ```
 NewClient is the main entrypoint for instantiating a Client struct. It takes
-your API Key as it's sole argument
+your API Key as it's sole argument and returns the Client struct ready to talk to the API
 
 
 
