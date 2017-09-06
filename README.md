@@ -143,29 +143,31 @@ GetOSs returns a list of OS objects from the api
 
 
 
-### <a name="Client.GetPackage">func</a> (\*Client) [GetPackage](/src/target/packages.go?s=654:714#L18)
+### <a name="Client.GetPackage">func</a> (\*Client) [GetPackage](/src/target/packages.go?s=714:774#L18)
 ``` go
 func (c *Client) GetPackage(id int) (pkg Package, err error)
 ```
-GetPackage takes an id (int) as it's sole argument and returns a single
-Package object
+GetPackage external method on Client that takes an id (int) as it's sole
+argument and returns a single Package object
 
 
 
 
-### <a name="Client.GetPackages">func</a> (\*Client) [GetPackages](/src/target/packages.go?s=369:418#L5)
+### <a name="Client.GetPackages">func</a> (\*Client) [GetPackages](/src/target/packages.go?s=398:447#L5)
 ``` go
 func (c *Client) GetPackages() ([]Package, error)
 ```
-GetPackages returns a list of Package object from the API
+GetPackages external method on Client that returns a list of Package object from the API
 
 
 
 
-### <a name="Client.GetPlans">func</a> (\*Client) [GetPlans](/src/target/plans.go?s=282:325#L3)
+### <a name="Client.GetPlans">func</a> (\*Client) [GetPlans](/src/target/plans.go?s=397:440#L5)
 ``` go
 func (c *Client) GetPlans() ([]Plan, error)
 ```
+GetPlans external method on Client to list available Plans
+
 
 
 
@@ -288,7 +290,7 @@ OS is a struct for storing the attributes of and OS
 
 
 
-## <a name="Package">type</a> [Package](/src/target/packages.go?s=90:307#L1)
+## <a name="Package">type</a> [Package](/src/target/packages.go?s=88:305#L1)
 ``` go
 type Package struct {
     ID        int    `json:"mbpkgid,string"`
@@ -298,7 +300,7 @@ type Package struct {
     Installed int    `json:"installed,string"`
 }
 ```
-Package struct stores the purchacable package values
+Package struct stores the purchaced package values
 
 
 
@@ -309,7 +311,7 @@ Package struct stores the purchacable package values
 
 
 
-## <a name="Plan">type</a> [Plan](/src/target/plans.go?s=17:280#L1)
+## <a name="Plan">type</a> [Plan](/src/target/plans.go?s=71:334#L1)
 ``` go
 type Plan struct {
     ID        int    `json:"plan_id,string"`
@@ -321,6 +323,8 @@ type Plan struct {
     Available string `json:"available"`
 }
 ```
+Plan struct defines the purchaceable plans/packages
+
 
 
 
