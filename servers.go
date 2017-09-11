@@ -90,7 +90,7 @@ func (c *Client) CreateServer(name, plan string, locationID, osID int, options *
         "plan": plan,
         "fqdn": name,
         "location": strconv.Itoa(locationID),
-        "image": strconv.Itoa(osID)
+        "image": strconv.Itoa(osID),
     }
 
 	if options != nil {
