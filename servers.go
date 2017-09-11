@@ -83,6 +83,50 @@ func (c *Client) RebootServer(id int) error {
 	return nil
 }
 
+//CreateServer external method on Client to buy and build a new instance.
+func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error) {
+
+	values := map[string]string{
+        "plan": plan,
+        "fqdn": name,
+        "location": strconv.Itoa(locationID),
+        "image": strconv.Itoa(osID)
+    }
+
+	if options != nil {
+		if options.SSHKeyID != 0 {
+			values["ssh_key_id"] = strconv.Itoa(options.SSHKeyID)
+		}
+		if options.Password != "" {
+			values["password"] = options.Password
+		}
+		if options.CloudConfig != "" {
+			values["cloud_config"] = base64.StdEncoding.EncodeToString([]byte(options.CloudConfig))
+		}
+	}
+
+	postData, _ := json.Marshal(values)
+
+	if err := c.post("/cloud/buy_build/", postData, &server); err != nil {
+		return Server{}, err
+	}
+
+	return server, nil
+}
+
+//CancelServer external method on Client to cancel/remove from billing an instance.
+//this method completely removes an instance, it cannot be rebuilt afterward.
+//billing should be prorated to the day or something like that.
+//This method requires apikey_allow_cancel to be checked on the account.
+func (c *Client) CancelServer(id int) error {
+
+	if err := c.post("/cloud/cancel/"+strconv.Itoa(id), nil, nil); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //ProvisionServer external method on Client to re-build an instance
 //This should not be used in Terraform as we will use CreateServer instead
 func (c *Client) ProvisionServer(name string, id, locationID, osID int, options *ServerOptions) (JobID, error) {
@@ -119,45 +163,6 @@ func (c *Client) ProvisionServer(name string, id, locationID, osID int, options 
 func (c *Client) DeleteServer(id int) error {
 
 	if err := c.post("/cloud/server/delete/"+strconv.Itoa(id), nil, nil); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-//CreateServer external method on Client to buy and build a new instance.
-func (c *Client) CreateServer(name, plan string, locationID, osID int, options *ServerOptions) (server Server, err error) {
-
-	values := map[string]string{"plan": plan, "fqdn": name, "location": strconv.Itoa(locationID), "image": strconv.Itoa(osID)}
-
-	if options != nil {
-		if options.SSHKeyID != 0 {
-			values["ssh_key_id"] = strconv.Itoa(options.SSHKeyID)
-		}
-		if options.Password != "" {
-			values["password"] = options.Password
-		}
-		if options.CloudConfig != "" {
-			values["cloud_config"] = base64.StdEncoding.EncodeToString([]byte(options.CloudConfig))
-		}
-	}
-
-	postData, _ := json.Marshal(values)
-
-	if err := c.post("/cloud/buy_build/", postData, &server); err != nil {
-		return Server{}, err
-	}
-
-	return server, nil
-}
-
-//CancelServer external method on Client to cancel/remove from billing an instance.
-//this method completely removes an instance, it cannot be rebuilt afterward.
-//billing should be prorated to the day or something like that.
-//This method requires apikey_allow_cancel to be checked on the account.
-func (c *Client) CancelServer(id int) error {
-
-	if err := c.post("/cloud/cancel/"+strconv.Itoa(id), nil, nil); err != nil {
 		return err
 	}
 
