@@ -1,5 +1,5 @@
-//Package gohvapi provides a simple golang interface to the HostVirtual
-//Rest API at https://bapi.vr.org/
+// Package gohvapi provides a simple golang interface to the HostVirtual
+// Rest API at https://bapi.vr.org/
 package gohvapi
 
 import (
@@ -17,14 +17,17 @@ import (
 	"strings"
 )
 
+// Version, BaseEndpoint, ContentType constants
 const (
 	Version      = "0.0.1"
 	BaseEndpoint = "https://bapi.vr.org/"
 	ContentType  = "application/json"
 )
 
-//Client is the main object (struct) to which we attach most methods/functions.
-//It has the following fields: (client, userAgent, endPoint, apiKey)
+// Client is the main object (struct) to which we attach most
+// methods/functions.
+// It has the following fields:
+// (client, userAgent, endPoint, apiKey)
 type Client struct {
 	client    *http.Client
 	userAgent string
@@ -32,18 +35,21 @@ type Client struct {
 	apiKey    string
 }
 
-//GetKeyFromEnv is a simple function to try to yank the value for "VR_API_KEY" from
-//the environment
+// GetKeyFromEnv is a simple function to try to yank the value for
+// "VR_API_KEY" from the environment
 func GetKeyFromEnv() string {
 	return os.Getenv("VR_API_KEY")
 }
 
-//NewClient is the main entrypoint for instantiating a Client struct. It takes
-//your API Key as it's sole argument and returns the Client struct ready to talk to the API
+// NewClient is the main entrypoint for instantiating a Client struct.
+// It takes your API Key as it's sole argument
+// and returns the Client struct ready to talk to the API
 func NewClient(apikey string) *Client {
 	useragent := "gohvapi/" + Version
 	transport := &http.Transport{
-		TLSNextProto: make(map[string]func(string, *tls.Conn) http.RoundTripper),
+		TLSNextProto: make(
+			map[string]func(string, *tls.Conn) http.RoundTripper,
+		),
 	}
 	client := http.DefaultClient
 	client.Transport = transport
@@ -57,16 +63,16 @@ func NewClient(apikey string) *Client {
 	}
 }
 
-//apiPath is just a short internal function for forcing the prepending of / to the url
+// apiPath is just a short internal function
+// for forcing the prepending of / to the url
 func apiPath(path string) string {
 	if strings.HasPrefix(path, "/") {
 		return fmt.Sprintf("%s", path)
-	} else {
-		return fmt.Sprintf("/%s", path)
 	}
+	return fmt.Sprintf("/%s", path)
 }
 
-//apiKeyPath is just a short internal function for appending the key to the url
+// apiKeyPath is just a short internal function for appending the key to the url
 func apiKeyPath(path, apiKey string) string {
 	if strings.Contains(path, "?") {
 		return path + "&key=" + apiKey
@@ -74,7 +80,7 @@ func apiKeyPath(path, apiKey string) string {
 	return path + "?key=" + apiKey
 }
 
-//get internal method on Client struct for providing the HTTP GET call
+// get internal method on Client struct for providing the HTTP GET call
 func (c *Client) get(path string, data interface{}) error {
 	req, err := c.newRequest("GET", apiPath(path), nil)
 	if err != nil {
@@ -83,7 +89,7 @@ func (c *Client) get(path string, data interface{}) error {
 	return c.do(req, data)
 }
 
-//post internal method on Client struct for providing the HTTP POST call
+// post internal method on Client struct for providing the HTTP POST call
 func (c *Client) post(path string, values []byte, data interface{}) error {
 
 	fmt.Println(string(values))
@@ -97,7 +103,7 @@ func (c *Client) post(path string, values []byte, data interface{}) error {
 	return c.do(req, data)
 }
 
-//put internal method on Client struct for providing the HTTP PUT call
+// put internal method on Client struct for providing the HTTP PUT call
 func (c *Client) put(path string, values []byte, data interface{}) error {
 
 	fmt.Println(string(values))
@@ -110,16 +116,18 @@ func (c *Client) put(path string, values []byte, data interface{}) error {
 	return c.do(req, data)
 }
 
-//patch internal method on Client struct for providing the HTTP PATCH call
+// patch internal method on Client struct for providing the HTTP PATCH call
 func (c *Client) patch(path string, values url.Values, data interface{}) error {
-	req, err := c.newRequest("PATCH", apiPath(path), strings.NewReader(values.Encode()))
+	req, err := c.newRequest(
+		"PATCH", apiPath(path), strings.NewReader(values.Encode()),
+	)
 	if err != nil {
 		return err
 	}
 	return c.do(req, data)
 }
 
-//delete internal method on Client struct for providing the HTTP DELETE call
+// delete internal method on Client struct for providing the HTTP DELETE call
 func (c *Client) delete(path string, values url.Values, data interface{}) error {
 	req, err := c.newRequest("DELETE", apiPath(path), nil)
 	if err != nil {
@@ -128,7 +136,9 @@ func (c *Client) delete(path string, values url.Values, data interface{}) error 
 	return c.do(req, data)
 }
 
-//newRequest internal method on Client struct for wrapping the get/post/put/patch/delete methods
+// Two functions (newRequest, do) below are used by the http method name functions above
+// newRequest internal method on Client struct to be wrapped inside the above http method
+// named functions for doing the actual work of the get/post/put/patch/delete methods
 func (c *Client) newRequest(method string, path string, body io.Reader) (*http.Request, error) {
 
 	relPath, err := url.Parse(apiKeyPath(path, c.apiKey))

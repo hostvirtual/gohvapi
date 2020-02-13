@@ -1,6 +1,6 @@
 package gohvapi
 
-//OS is a struct for storing the attributes of and OS
+// OS is a struct for storing the attributes of and OS
 type OS struct {
 	ID      int    `json:"id,string"`
 	Os      string `json:"os"`
@@ -11,7 +11,7 @@ type OS struct {
 	Tech    string `json:"tech"`
 }
 
-//GetOSs returns a list of OS objects from the api
+// GetOSs returns a list of OS objects from the api
 func (c *Client) GetOSs() ([]OS, error) {
 
 	var osList []OS
